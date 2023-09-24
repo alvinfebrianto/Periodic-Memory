@@ -12,13 +12,13 @@ let secondCard = false;
 
 //Items array
 const items = [
-  { name: "bee", image: "assets/bee.png" },
-  { name: "crocodile", image: "assets/crocodile.png" },
-  { name: "macaw", image: "assets/macaw.png" },
-  { name: "gorilla", image: "assets/gorilla.png" },
-  { name: "tiger", image: "assets/tiger.png" },
-  { name: "monkey", image: "assets/monkey.png" },
-  { name: "chameleon", image: "assets/chameleon.png" },
+  { name: "hydrogen", image: "assets/g1H.png" },
+  { name: "lithium", image: "assets/g1Li.png" },
+  { name: "sodium", image: "assets/g1Na.png" },
+  { name: "potassium", image: "assets/g1K.png" },
+  { name: "rubidium", image: "assets/g1Rb.png" },
+  { name: "caesium", image: "assets/g1Cs.png" },
+  { name: "francium", image: "assets/g1Fr.png" },
   { name: "piranha", image: "assets/piranha.png" },
   { name: "anaconda", image: "assets/anaconda.png" },
   { name: "sloth", image: "assets/sloth.png" },
