@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Quicksand", sans-serif;
 }
 body {
   background-color: #0a3b2f;
@@ -11,12 +11,12 @@ body {
   box-sizing: content-box;
   width: 26.87em;
   padding: 1.5em 3em;
-  background-color: #ffffff;
+  background-color: #D0E7D2;
   position: absolute;
   transform: translate(-50%, -50%);
-  left: 50%;
+  left: 75%;
   top: 50%;
-  border-radius: 0.6em;
+  border-radius: 0.8em;
   box-shadow: 0 0.9em 2.8em rgba(86, 66, 0, 0.2);
 }
 .game-container {
@@ -26,8 +26,9 @@ body {
   gap: 0.6em;
 }
 .stats-container {
-  text-align: right;
+  text-align: left;
   margin-bottom: 1.2em;
+  font-size: 1.2em;
 }
 .stats-container span {
   font-weight: 600;
@@ -79,7 +80,7 @@ body {
 }
 button {
   border: none;
-  border-radius: 0.3em;
+  border-radius: 0.5em;
   padding: 1em 1.5em;
   cursor: pointer;
 }
@@ -91,7 +92,7 @@ button {
   color: #ffffff;
 }
 .controls-container button {
-  font-size: 1.3em;
+  font-size: 1.5em;
   box-shadow: 0 0.6em 2em rgba(86, 66, 0, 0.2);
 }
 .hide {
