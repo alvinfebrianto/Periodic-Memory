@@ -10,7 +10,6 @@ let interval;
 let firstCard = false;
 let secondCard = false;
 
-//Items array
 const items = [
   { name: "hydrogen", image: "assets/g1H.png" },
   { name: "lithium", image: "assets/g1Li.png" },
@@ -19,21 +18,16 @@ const items = [
   { name: "rubidium", image: "assets/g1Rb.png" },
   { name: "caesium", image: "assets/g1Cs.png" },
   { name: "francium", image: "assets/g1Fr.png" },
-  { name: "piranha", image: "assets/piranha.png" },
-  { name: "anaconda", image: "assets/anaconda.png" },
-  { name: "sloth", image: "assets/sloth.png" },
-  { name: "cockatoo", image: "assets/cockatoo.png" },
-  { name: "toucan", image: "assets/toucan.png" },
 ];
 
-//Initial Time
+//Inisialisasi waktu awal
 let seconds = 0,
   minutes = 0;
-//Initial moves and win count
+//Inisialisasi jumlah gerakan dan jumlah kemenangan
 let movesCount = 0,
   winCount = 0;
 
-//For timer
+//Fungsi untuk mengupdate waktu
 const timeGenerator = () => {
   seconds += 1;
   //minutes logic
@@ -47,7 +41,7 @@ const timeGenerator = () => {
   timeValue.innerHTML = `<span>Time: </span>${minutesValue}:${secondsValue}`;
 };
 
-//For calculating moves
+//Fungsi untuk menghitung gerakan
 const movesCounter = () => {
   movesCount += 1;
   moves.innerHTML = `<span>Moves: </span>${movesCount}`;
@@ -55,17 +49,13 @@ const movesCounter = () => {
 
 //Pick random objects from the items array
 const generateRandom = (size = 4) => {
-  //temporary array
   let tempArray = [...items];
-  //initializes cardValues array
   let cardValues = [];
-  //size should be double (4*4 matrix)/2 since pairs of objects would exist
   size = (size * size) / 2;
-  //Random object selection
+
   for (let i = 0; i < size; i++) {
     const randomIndex = Math.floor(Math.random() * tempArray.length);
     cardValues.push(tempArray[randomIndex]);
-    //once selected remove the object from temp array
     tempArray.splice(randomIndex, 1);
   }
   return cardValues;
@@ -74,22 +64,19 @@ const generateRandom = (size = 4) => {
 const matrixGenerator = (cardValues, size = 4) => {
   gameContainer.innerHTML = "";
   cardValues = [...cardValues, ...cardValues];
-  //simple shuffle
   cardValues.sort(() => Math.random() - 0.5);
+
   for (let i = 0; i < size * size; i++) {
-    /*
-        Create Cards
-        before => front side (contains question mark)
-        after => back side (contains actual image);
-        data-card-values is a custom attribute which stores the names of the cards to match later
-      */
-    gameContainer.innerHTML += `
-     <div class="card-container" data-card-value="${cardValues[i].name}">
-        <div class="card-before">?</div>
-        <div class="card-after">
-        <img src="${cardValues[i].image}" class="image"/></div>
-     </div>
-     `;
+    if (cardValues[i]) {
+      gameContainer.innerHTML += `
+        <div class="card-container" data-card-value="${cardValues[i].name}">
+          <div class="card-before">?</div>
+          <div class="card-after">
+            <img src="${cardValues[i].image}" class="image"/>
+          </div>
+        </div>
+      `;
+    }
   }
   //Grid
   gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;

@@ -22,7 +22,9 @@ body {
 .game-container {
   position: relative;
   width: 100%;
+  margin: auto;
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.6em;
 }
 .stats-container {
@@ -35,8 +37,8 @@ body {
 }
 .card-container {
   position: relative;
-  width: 6.25em;
-  height: 6.25em;
+  width: 5.5em;
+  height: 5.5em;
   cursor: pointer;
 }
 .card-before,
