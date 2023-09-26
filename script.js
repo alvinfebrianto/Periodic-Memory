@@ -10,6 +10,9 @@ let interval;
 let firstCard = false;
 let secondCard = false;
 
+// tambah untuk pasangan kartu yang cocok 
+let matchedPairs = 0;
+
 const items = [
   { name: "hydrogen", image: "assets/g1H.png" },
   { name: "lithium", image: "assets/g1Li.png" },
@@ -29,16 +32,16 @@ let movesCount = 0,
 
 //Fungsi untuk mengupdate waktu
 const timeGenerator = () => {
-  seconds += 1;
-  //minutes logic
-  if (seconds >= 60) {
-    minutes += 1;
-    seconds = 0;
+  if (matchedPairs < cardValues.length / 2) {
+    seconds += 1;
+    if (seconds >= 60) {
+      minutes += 1;
+      seconds = 0;
+    }
+    let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
+    let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
+    timeValue.innerHTML = `<span>Time: </span>${minutesValue}:${secondsValue}`;
   }
-  //format time before displaying
-  let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
-  let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-  timeValue.innerHTML = `<span>Time: </span>${minutesValue}:${secondsValue}`;
 };
 
 //Fungsi untuk menghitung gerakan
@@ -46,6 +49,33 @@ const movesCounter = () => {
   movesCount += 1;
   moves.innerHTML = `<span>Moves: </span>${movesCount}`;
 };
+
+// Fungsi untuk menampilkan kartu pasangan yang cocok
+function showSuccessNotification() {
+  if ("Notification" in window) {
+    // Periksa apakah browser mendukung Notification API
+    if (Notification.permission === "granted") {
+      // Izin notifikasi sudah diberikan
+      new Notification("Congratulations", {
+        body: "You've matched all the cards!",
+      });
+    } else if (Notification.permission !== "denied") {
+      // Minta izin notifikasi jika belum diberikan atau ditolak
+      Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+          new Notification("Congratulations", {
+            body: "You've matched all the cards!",
+          });
+        }
+      });
+    }
+  } else {
+    // Browser tidak mendukung Notification API
+    alert("Congratulations, you've matched all the cards!");
+  }
+}
+
+
 
 //Pick random objects from the items array
 const generateRandom = (size = 4) => {
@@ -85,48 +115,35 @@ const matrixGenerator = (cardValues, size = 4) => {
   cards = document.querySelectorAll(".card-container");
   cards.forEach((card) => {
     card.addEventListener("click", () => {
-      //If selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
-      if (!card.classList.contains("matched")) {
-        //flip the cliked card
+      if (!card.classList.contains("matched") && !firstCard) {
         card.classList.add("flipped");
-        //if it is the firstcard (!firstCard since firstCard is initially false)
-        if (!firstCard) {
-          //so current card will become firstCard
-          firstCard = card;
-          //current cards value becomes firstCardValue
-          firstCardValue = card.getAttribute("data-card-value");
+        firstCard = card;
+      } else if (!card.classList.contains("matched") && !secondCard && card !== firstCard) {
+        card.classList.add("flipped");
+        secondCard = card;
+        const firstCardValue = firstCard.getAttribute("data-card-value");
+        const secondCardValue = secondCard.getAttribute("data-card-value");
+
+        if (firstCardValue === secondCardValue) {
+          firstCard.classList.add("matched");
+          secondCard.classList.add("matched");
+          firstCard = false;
+          secondCard = false;
+          matchedPairs++;
+
+          if (matchedPairs === cardValues.length / 2) {
+            showSuccessNotification();
+            clearInterval(interval); // Hentikan timer saat permainan selesai
+          }
         } else {
-          //increment moves since user selected second card
-          movesCounter();
-          //secondCard and value
-          secondCard = card;
-          let secondCardValue = card.getAttribute("data-card-value");
-          if (firstCardValue == secondCardValue) {
-            //if both cards match add matched class so these cards would beignored next time
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            //set firstCard to false since next card would be first now
-            firstCard = false;
-            //winCount increment as user found a correct match
-            winCount += 1;
-            //check if winCount ==half of cardValues
-            if (winCount == Math.floor(cardValues.length / 2)) {
-              result.innerHTML = `<h2>You Won</h2>
-            <h4>Moves: ${movesCount}</h4>`;
-              stopGame();
-            }
-          } else {
-            //if the cards dont match
-            //flip the cards back to normal
-            let [tempFirst, tempSecond] = [firstCard, secondCard];
+          setTimeout(() => {
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
             firstCard = false;
             secondCard = false;
-            let delay = setTimeout(() => {
-              tempFirst.classList.remove("flipped");
-              tempSecond.classList.remove("flipped");
-            }, 900);
-          }
+          }, 1000);
         }
+        movesCounter();
       }
     });
   });
@@ -149,21 +166,21 @@ startButton.addEventListener("click", () => {
 });
 
 //Stop game
-stopButton.addEventListener(
-  "click",
-  (stopGame = () => {
-    controls.classList.remove("hide");
-    stopButton.classList.add("hide");
-    startButton.classList.remove("hide");
-    clearInterval(interval);
-  })
-);
+stopButton.addEventListener("click", () => {
+  controls.classList.remove("hide");
+  stopButton.classList.add("hide");
+  startButton.classList.remove("hide");
+  clearInterval(interval);
+  result.innerHTML = "";
+  matchedPairs = 0;
+  gameContainer.innerHTML = "";
+});
 
 //Initialize values and func calls
 const initializer = () => {
   result.innerText = "";
   winCount = 0;
-  let cardValues = generateRandom();
+  cardValues = generateRandom();
   console.log(cardValues);
   matrixGenerator(cardValues);
 };
