@@ -14,21 +14,21 @@ let secondCard = false;
 let matchedPairs = 0;
 
 const items = [
-  { name: "hydrogen", image: "assets/g1H.png" },
-  { name: "lithium", image: "assets/g1Li.png" },
-  { name: "sodium", image: "assets/g1Na.png" },
-  { name: "potassium", image: "assets/g1K.png" },
-  { name: "rubidium", image: "assets/g1Rb.png" },
-  { name: "caesium", image: "assets/g1Cs.png" },
-  { name: "francium", image: "assets/g1Fr.png" },
+  { name: "hydrogen", image: "assets/golongan_1/g1H.png" },
+  { name: "lithium", image: "assets/golongan_1/g1Li.png" },
+  { name: "sodium", image: "assets/golongan_1/g1Na.png" },
+  { name: "potassium", image: "assets/golongan_1/g1K.png" },
+  { name: "rubidium", image: "assets/golongan_1/g1Rb.png" },
+  { name: "caesium", image: "assets/golongan_1/g1Cs.png" },
+  { name: "francium", image: "assets/golongan_1/g1Fr.png" },
 ];
 
 //Inisialisasi waktu awal
 let seconds = 0,
-  minutes = 0;
-//Inisialisasi jumlah gerakan dan jumlah kemenangan
+    minutes = 0;
+//Inisialisasi jumlah gerakan
 let movesCount = 0,
-  winCount = 0;
+    winCount = 0;
 
 //Fungsi untuk mengupdate waktu
 const timeGenerator = () => {
@@ -38,6 +38,7 @@ const timeGenerator = () => {
       minutes += 1;
       seconds = 0;
     }
+    //Format waktu
     let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
     let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
     timeValue.innerHTML = `<span>Time: </span>${minutesValue}:${secondsValue}`;
@@ -50,17 +51,17 @@ const movesCounter = () => {
   moves.innerHTML = `<span>Moves: </span>${movesCount}`;
 };
 
-// Fungsi untuk menampilkan kartu pasangan yang cocok
+//Fungsi untuk menampilkan kartu pasangan yang cocok
 function showSuccessNotification() {
   if ("Notification" in window) {
-    // Periksa apakah browser mendukung Notification API
+    //Periksa apakah browser mendukung Notification API
     if (Notification.permission === "granted") {
-      // Izin notifikasi sudah diberikan
+      //Izin notifikasi sudah diberikan
       new Notification("Congratulations", {
         body: "You've matched all the cards!",
       });
     } else if (Notification.permission !== "denied") {
-      // Minta izin notifikasi jika belum diberikan atau ditolak
+      //Minta izin notifikasi jika belum diberikan atau ditolak
       Notification.requestPermission().then(function (permission) {
         if (permission === "granted") {
           new Notification("Congratulations", {
@@ -75,9 +76,7 @@ function showSuccessNotification() {
   }
 }
 
-
-
-//Pick random objects from the items array
+//Pilih objek acak dari item array
 const generateRandom = (size = 4) => {
   let tempArray = [...items];
   let cardValues = [];
@@ -154,13 +153,13 @@ startButton.addEventListener("click", () => {
   movesCount = 0;
   seconds = 0;
   minutes = 0;
-  //controls amd buttons visibility
+  //Kontrol dan tombol
   controls.classList.add("hide");
   stopButton.classList.remove("hide");
   startButton.classList.add("hide");
-  //Start timer
+  //Mulai timer
   interval = setInterval(timeGenerator, 1000);
-  //initial moves
+  //Gerakan awal
   moves.innerHTML = `<span>Moves:</span> ${movesCount}`;
   initializer();
 });
@@ -176,7 +175,7 @@ stopButton.addEventListener("click", () => {
   gameContainer.innerHTML = "";
 });
 
-//Initialize values and func calls
+//Inisialisasi values
 const initializer = () => {
   result.innerText = "";
   winCount = 0;
