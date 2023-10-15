@@ -43,8 +43,10 @@ const stopGame = () => {
   clearInterval(interval);
   matchedPairs = 0;
   gameContainer.innerHTML = "";
-  resultElement.innerHTML = `<h2>You Won</h2><h4>Moves: ${movesCount}</h4><br><br><br>`;
+  const timeString = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  resultElement.innerHTML = `<h2>You Won</h2><h4>Moves: ${movesCount}</h4><h4>Time: ${timeString}</h4><br><br><br>`;
 };
+
 
 const generateRandom = (pairCount = 7) => {
   let availableItems = [...items];
