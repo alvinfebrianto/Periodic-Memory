@@ -114,3 +114,71 @@ button {
   font-size: 1.8em;
   margin: 0.6em 0 1em 0;
 }
+
+.card-names-wrapper {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+  margin-right: 20px; /* Jarak antara daftar card dan permainan */
+  width: 200px; /* Sesuaikan lebar sesuai kebutuhan */
+}
+
+.card-names-wrapper h3 {
+  font-weight: bold;
+}
+
+.card-names {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-names li {
+  margin: 5px 0;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Mengisi seluruh tinggi viewport */
+}
+
+.card-names-wrapper {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 5px;
+  margin-right: 20px; /* Jarak antara daftar card dan permainan */
+  width: 200px; /* Sesuaikan lebar sesuai kebutuhan */
+}
+
+.card-names-wrapper h3 {
+  font-weight: bold;
+}
+
+.card-names {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Jarak antara card unsur kimia */
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Jarak antara gambar dan teks */
+}
+
+.card img {
+  width: 40px; /* Sesuaikan lebar gambar sesuai kebutuhan */
+  height: auto; /* Mengatur tinggi agar gambar sesuai proporsi */
+}
+
+.card p {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 500;
+}
+
+
+
