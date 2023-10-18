@@ -2,23 +2,23 @@ const movesElement = document.getElementById("moves-count"),
       timeValue = document.getElementById("time"),
       startButton = document.getElementById("start"),
       stopButton = document.getElementById("stop"),
-      gameContainer = document.querySelector(".game-container"),
       resultElement = document.getElementById("result"),
-      controlsContainer = document.querySelector(".controls-container");
+      gameContainer = document.querySelector(".game-container"),
+      controlsContainer = document.querySelector(".controls-container"),
+      logo = document.querySelector(".logo");
 
 let cards, interval, firstCard = null, secondCard = null, matchedPairs = 0;
+let seconds = 0, minutes = 0, movesCount = 0, winCount = 0, totalTime = 0;
 
 const items = [
-  { name: "hydrogen", image: "assets/golongan_1/g1H.png" },
-  { name: "lithium", image: "assets/golongan_1/g1Li.png" },
-  { name: "sodium", image: "assets/golongan_1/g1Na.png" },
-  { name: "potassium", image: "assets/golongan_1/g1K.png" },
-  { name: "rubidium", image: "assets/golongan_1/g1Rb.png" },
-  { name: "caesium", image: "assets/golongan_1/g1Cs.png" },
-  { name: "francium", image: "assets/golongan_1/g1Fr.png" },
+  { name: "hydrogen", image: "assets/golongan 1/hydrogen.png" },
+  { name: "lithium", image: "assets/golongan 1/lithium.png" },
+  { name: "sodium", image: "assets/golongan 1/sodium.png" },
+  { name: "potassium", image: "assets/golongan 1/potassium.png" },
+  { name: "rubidium", image: "assets/golongan 1/rubidium.png" },
+  { name: "caesium", image: "assets/golongan 1/caesium.png" },
+  { name: "francium", image: "assets/golongan 1/francium.png" },
 ];
-
-let seconds = 0, minutes = 0, movesCount = 0, winCount = 0;
 
 const movesCounter = () => {
   movesCount += 1;
@@ -31,6 +31,7 @@ const updateTimeValue = () => {
     let secondsString = seconds < 10 ? `0${seconds}` : seconds;
     let minutesString = minutes < 10 ? `0${minutes}` : minutes;
     timeValue.innerHTML = `<span>Time: </span>${minutesString}:${secondsString}`;
+    totalTime = minutes * 60 + seconds;
   } else {
     stopGame();
   }
@@ -38,15 +39,31 @@ const updateTimeValue = () => {
 
 const stopGame = () => {
   controlsContainer.classList.remove("hide");
+  logo.style.display = "none";
   stopButton.classList.add("hide");
   startButton.classList.remove("hide");
   clearInterval(interval);
   matchedPairs = 0;
   gameContainer.innerHTML = "";
-  const timeString = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  resultElement.innerHTML = `<h2>You Won</h2><h4>Moves: ${movesCount}</h4><h4>Time: ${timeString}</h4><br><br><br>`;
-};
+  let resultImage;
 
+  if (totalTime <= 60) {
+    resultImage = "assets/rank/s.png";
+  } else if (totalTime <= 120) {
+    resultImage = "assets/rank/a.png";
+  } else if (totalTime <= 240) {
+    resultImage = "assets/rank/b.png";
+  } else {
+    resultImage = "assets/rank/c.png";
+  }
+
+  resultElement.innerHTML = `
+    <h2>You Got</h2>
+    <img src="${resultImage}" style="max-width: 80%; height: auto;"><br><br>
+    <h4>Moves: ${movesCount}</h4>
+    <h4>Time: ${totalTime} Seconds</h4><br><br><br>
+  `;
+};
 
 const generateRandom = (pairCount = 7) => {
   let availableItems = [...items];
@@ -65,7 +82,6 @@ const generateRandom = (pairCount = 7) => {
 
 const generateGameMatrix = (selectedItems, rows = 4) => {
   gameContainer.innerHTML = "";
-
   const rowCount = [4, 4, 4, 2];
   let cardIndex = 0;
 
@@ -82,12 +98,9 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
       cardIndex++;
     }
   }
-
   const columns = rows;
   gameContainer.style.gridTemplateColumns = `repeat(${columns}, auto)`;
-
   cards = document.querySelectorAll(".card-container");
-
   cards.forEach(card => {
     card.addEventListener("click", () => {
       if (card.classList.contains("matched") || firstCard) {
@@ -115,7 +128,6 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
               secondCard = null;
             }, 1000);
           }
-
           movesCounter();
         }
       } else {
@@ -155,3 +167,10 @@ const initializeGame = () => {
   console.log(selectedItems);
   generateGameMatrix(selectedItems);
 };
+
+document.getElementById('toggleButton').addEventListener('click', function() {
+  var cardNames = document.querySelector('.card-names');
+  cardNames.classList.toggle('collapsed');
+  this.classList.toggle('arrow-up');
+  this.classList.toggle('arrow-down');
+});
