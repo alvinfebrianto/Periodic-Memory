@@ -7,8 +7,8 @@ const movesElement = document.getElementById("moves-count"),
       controlsContainer = document.querySelector(".controls-container"),
       logo = document.querySelector(".logo");
 
-let cards, interval, firstCard = null, secondCard = null, matchedPairs = 0;
-let seconds = 0, minutes = 0, movesCount = 0, winCount = 0, totalTime = 0;
+let cards, interval, firstCard = null, secondCard = null, matchedPairs = 0,
+    seconds = 0, minutes = 0, movesCount = 0, winCount = 0, totalTime = 0;
 
 const items = [
   { name: "hydrogen", image: "assets/golongan 1/hydrogen.png" },
@@ -46,7 +46,6 @@ const stopGame = () => {
   matchedPairs = 0;
   gameContainer.innerHTML = "";
   let resultImage;
-
   if (totalTime <= 60) {
     resultImage = "assets/rank/s.png";
   } else if (totalTime <= 120) {
@@ -56,7 +55,6 @@ const stopGame = () => {
   } else {
     resultImage = "assets/rank/c.png";
   }
-
   resultElement.innerHTML = `
     <h2>You Got</h2>
     <img src="${resultImage}" style="max-width: 80%; height: auto;"><br><br>
@@ -69,14 +67,12 @@ const generateRandom = (pairCount = 7) => {
   let availableItems = [...items];
   let selectedItems = [];
   pairCount = pairCount * pairCount / 2;
-
   for (let i = 0; i < pairCount; i++) {
     let randomIndex = Math.floor(Math.random() * availableItems.length);
     let selectedItem = availableItems[randomIndex];
     selectedItems.push(selectedItem, selectedItem);
     availableItems.splice(randomIndex, 1);
   }
-
   return selectedItems.sort(() => Math.random() - 0.5);
 };
 
@@ -84,7 +80,6 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
   gameContainer.innerHTML = "";
   const rowCount = [4, 4, 4, 2];
   let cardIndex = 0;
-
   for (let row = 0; row < rowCount.length; row++) {
     for (let col = 0; col < rowCount[row]; col++) {
       gameContainer.innerHTML += `
@@ -109,14 +104,12 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
           secondCard = card;
           let firstCardValue = firstCard.getAttribute("data-card-value");
           let secondCardValue = secondCard.getAttribute("data-card-value");
-
           if (firstCardValue === secondCardValue) {
             firstCard.classList.add("matched");
             secondCard.classList.add("matched");
             firstCard = null;
             secondCard = null;
             matchedPairs += 1;
-
             if (matchedPairs === selectedItems.length / 2) {
               clearInterval(interval);
             }
@@ -169,7 +162,7 @@ const initializeGame = () => {
 };
 
 document.getElementById('toggleButton').addEventListener('click', function() {
-  var cardNames = document.querySelector('.card-names');
+  const cardNames = document.querySelector('.card-names');
   cardNames.classList.toggle('collapsed');
   this.classList.toggle('arrow-up');
   this.classList.toggle('arrow-down');

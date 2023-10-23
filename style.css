@@ -177,3 +177,12 @@ button {
 .arrow-up::before {
   content: '\f077';
 }
+.level-indicator {
+  position: absolute;
+  top: 3%;
+  left: 2%;
+  background-color: #D0E7D2;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  font-weight: bold;
+}
