@@ -3,6 +3,7 @@ const movesElement = document.getElementById("moves-count"),
       startButton = document.getElementById("start"),
       stopButton = document.getElementById("stop"),
       resultElement = document.getElementById("result"),
+      restartButton = document.getElementById("restart"),
       gameContainer = document.querySelector(".game-container"),
       controlsContainer = document.querySelector(".controls-container"),
       logo = document.querySelector(".logo");
@@ -10,14 +11,14 @@ const movesElement = document.getElementById("moves-count"),
 let cards, interval, firstCard = null, secondCard = null, matchedPairs = 0,
     seconds = 0, minutes = 0, movesCount = 0, winCount = 0, totalTime = 0;
 
-const items = [
-  { name: "hydrogen", image: "assets/golongan 1/hydrogen.png" },
-  { name: "lithium", image: "assets/golongan 1/lithium.png" },
-  { name: "sodium", image: "assets/golongan 1/sodium.png" },
-  { name: "potassium", image: "assets/golongan 1/potassium.png" },
+const levelOneItems = [
+  { name: "hidrogen", image: "assets/golongan 1/hidrogen.png" },
+  { name: "litium", image: "assets/golongan 1/litium.png" },
+  { name: "natrium", image: "assets/golongan 1/natrium.png" },
+  { name: "kalium", image: "assets/golongan 1/kalium.png" },
   { name: "rubidium", image: "assets/golongan 1/rubidium.png" },
-  { name: "caesium", image: "assets/golongan 1/caesium.png" },
-  { name: "francium", image: "assets/golongan 1/francium.png" },
+  { name: "sesium", image: "assets/golongan 1/sesium.png" },
+  { name: "fransium", image: "assets/golongan 1/fransium.png" },
 ];
 
 const movesCounter = () => {
@@ -40,8 +41,9 @@ const updateTimeValue = () => {
 const stopGame = () => {
   controlsContainer.classList.remove("hide");
   logo.style.display = "none";
+  startButton.classList.add("hide");
+  restartButton.classList.remove("hide");
   stopButton.classList.add("hide");
-  startButton.classList.remove("hide");
   clearInterval(interval);
   matchedPairs = 0;
   gameContainer.innerHTML = "";
@@ -64,7 +66,7 @@ const stopGame = () => {
 };
 
 const generateRandom = (pairCount = 7) => {
-  let availableItems = [...items];
+  let availableItems = [...levelOneItems];
   let selectedItems = [];
   pairCount = pairCount * pairCount / 2;
   for (let i = 0; i < pairCount; i++) {
@@ -138,6 +140,20 @@ startButton.addEventListener("click", () => {
   controlsContainer.classList.add("hide");
   stopButton.classList.remove("hide");
   startButton.classList.add("hide");
+  restartButton.classList.remove("hide");
+  interval = setInterval(updateTimeValue, 1000);
+  movesElement.innerHTML = `<span>Moves:</span> ${movesCount}`;
+  initializeGame();
+});
+
+restartButton.addEventListener("click", () => {
+  movesCount = 0;
+  seconds = 0;
+  minutes = 0;
+  controlsContainer.classList.add("hide");
+  stopButton.classList.remove("hide");
+  startButton.classList.add("hide");
+  restartButton.classList.remove("hide");
   interval = setInterval(updateTimeValue, 1000);
   movesElement.innerHTML = `<span>Moves:</span> ${movesCount}`;
   initializeGame();
@@ -146,6 +162,7 @@ startButton.addEventListener("click", () => {
 stopButton.addEventListener("click", () => {
   controlsContainer.classList.remove("hide");
   stopButton.classList.add("hide");
+  restartButton.classList.add("hide");
   startButton.classList.remove("hide");
   clearInterval(interval);
   matchedPairs = 0;
