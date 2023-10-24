@@ -1,6 +1,8 @@
 const movesElement = document.getElementById("moves-count"),
       timeValue = document.getElementById("time"),
       startButton = document.getElementById("start"),
+      pauseButton = document.getElementById("pause"),
+      resumeButton = document.getElementById("resume"),
       stopButton = document.getElementById("stop"),
       resultElement = document.getElementById("result"),
       restartButton = document.getElementById("restart"),
@@ -20,6 +22,14 @@ const levelOneItems = [
   { name: "sesium", image: "assets/golongan 1/sesium.png" },
   { name: "fransium", image: "assets/golongan 1/fransium.png" },
 ];
+
+const initializeGame = () => {
+  resultElement.innerText = "";
+  winCount = 0;
+  let selectedItems = generateRandom();
+  console.log(selectedItems);
+  generateGameMatrix(selectedItems);
+};
 
 const movesCounter = () => {
   movesCount += 1;
@@ -133,7 +143,7 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
   });
 };
 
-startButton.addEventListener("click", () => {
+const startOrRestartGame = () => {
   movesCount = 0;
   seconds = 0;
   minutes = 0;
@@ -144,39 +154,39 @@ startButton.addEventListener("click", () => {
   interval = setInterval(updateTimeValue, 1000);
   movesElement.innerHTML = `<span>Moves:</span> ${movesCount}`;
   initializeGame();
-});
+};
 
-restartButton.addEventListener("click", () => {
-  movesCount = 0;
-  seconds = 0;
-  minutes = 0;
-  controlsContainer.classList.add("hide");
-  stopButton.classList.remove("hide");
-  startButton.classList.add("hide");
-  restartButton.classList.remove("hide");
-  interval = setInterval(updateTimeValue, 1000);
-  movesElement.innerHTML = `<span>Moves:</span> ${movesCount}`;
-  initializeGame();
-});
+startButton.addEventListener("click", startOrRestartGame);
+
+restartButton.addEventListener("click", startOrRestartGame);
 
 stopButton.addEventListener("click", () => {
   controlsContainer.classList.remove("hide");
   stopButton.classList.add("hide");
   restartButton.classList.add("hide");
   startButton.classList.remove("hide");
+  gameContainer.classList.remove("paused");
+  pauseButton.classList.remove("hide");
+  resumeButton.classList.add("hide");
   clearInterval(interval);
   matchedPairs = 0;
   resultElement.innerHTML = "";
   gameContainer.innerHTML = "";
 });
 
-const initializeGame = () => {
-  resultElement.innerText = "";
-  winCount = 0;
-  let selectedItems = generateRandom();
-  console.log(selectedItems);
-  generateGameMatrix(selectedItems);
-};
+pauseButton.addEventListener("click", () => {
+  clearInterval(interval);
+  gameContainer.classList.add("paused");
+  pauseButton.classList.add("hide");
+  resumeButton.classList.remove("hide");
+});
+
+resumeButton.addEventListener("click", () => {
+  interval = setInterval(updateTimeValue, 1000);
+  gameContainer.classList.remove("paused");
+  resumeButton.classList.add("hide");
+  pauseButton.classList.remove("hide");
+});
 
 document.getElementById('toggleButton').addEventListener('click', function() {
   const cardNames = document.querySelector('.card-names');
