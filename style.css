@@ -88,7 +88,7 @@ body {
   transform: rotateY(0deg);
 }
 .logo {
-  margin-bottom: 9em;
+  margin-bottom: 6em;
   width: 25em;
 }
 .controls-container {
@@ -112,7 +112,7 @@ button {
   padding: 1em 1.5em;
   cursor: pointer;
 }
-#start, #restart {
+#start, #restart, #options {
   background-color: #9EBF8A;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
 }
@@ -204,4 +204,49 @@ button {
   padding: 0.5em 1em;
   border-radius: 0.5em;
   font-weight: bold;
+}
+#options {
+  margin-top: 0.5em;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+}
+#optionsOk {
+  background-color: #9EBF8A;
+  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 1em;
+}
+.options-popup {
+  position: absolute;
+  background-color: #D0E7D2;
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0 0.6em 2em rgba(86, 66, 0, 0.2);
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 60%;
+  text-align: center;
+}
+.options-popup label {
+  font-size: 1.6em;
+}
+.options-popup label[for="music"] {
+  font-weight: bold;
+}
+.music-options {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+.music-options label {
+  margin: 0 1em;
+}
+.music-options input {
+  margin-right: 0.5em;
+}
+.options-popup.hide {
+  display: none;
 }

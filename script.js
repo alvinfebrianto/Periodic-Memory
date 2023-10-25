@@ -8,6 +8,10 @@ const movesElement = document.getElementById("moves-count"),
       restartButton = document.getElementById("restart"),
       gameContainer = document.querySelector(".game-container"),
       controlsContainer = document.querySelector(".controls-container"),
+      optionsButton = document.getElementById("options"),
+      optionsPopup = document.getElementById("optionsPopup"),
+      musicOptions = document.getElementsByName("music"),
+      optionsOkButton = document.getElementById("optionsOk"),
       logo = document.querySelector(".logo");
 
 let cards, interval, firstCard = null, secondCard = null, matchedPairs = 0,
@@ -71,7 +75,7 @@ const stopGame = () => {
     <h2>You Got</h2>
     <img src="${resultImage}" style="max-width: 80%; height: auto;"><br><br>
     <h4>Moves: ${movesCount}</h4>
-    <h4>Time: ${totalTime} Seconds</h4><br><br><br>
+    <h4>Time: ${totalTime} Seconds</h4><br><br>
   `;
 };
 
@@ -143,6 +147,27 @@ const generateGameMatrix = (selectedItems, rows = 4) => {
   });
 };
 
+musicOptions.forEach(option => {
+  option.addEventListener("change", () => {
+    const selectedOption = document.querySelector('input[name="music"]:checked').value;
+    const audioElement = document.querySelector("audio");
+    if (selectedOption === "on") {
+      if (audioElement) {
+        audioElement.loop = true;
+        audioElement.play();
+      } else {
+        let audio = new Audio("assets/bg-music.mp3");
+        audio.loop = true;
+        audio.play();
+      }
+    } else if (selectedOption === "off") {
+      if (audioElement) {
+        audioElement.pause();
+      }
+    }
+  });
+});
+
 const startOrRestartGame = () => {
   movesCount = 0;
   seconds = 0;
@@ -186,6 +211,15 @@ resumeButton.addEventListener("click", () => {
   gameContainer.classList.remove("paused");
   resumeButton.classList.add("hide");
   pauseButton.classList.remove("hide");
+});
+
+optionsButton.addEventListener("click", () => {
+  optionsPopup.classList.toggle("hide");
+});
+
+optionsOkButton.addEventListener("click", () => {
+  optionsPopup.classList.add("hide");
+  const musicOption = document.getElementById("music").value;
 });
 
 document.getElementById('toggleButton').addEventListener('click', function() {

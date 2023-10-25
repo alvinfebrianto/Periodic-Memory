@@ -59,8 +59,22 @@
     <div class="controls-container">
       <div><img src="assets/logo.png" class="logo"></div>
       <p id="result"></p>
-      <button id="start"><strong>Start Game</strong></button>
+      <button id="start"><strong>Start</strong></button>
       <button id="restart" class="hide"><strong>Restart</strong></button>
+      <button id="options"><strong>Options</strong></button>
+      <div class="options-popup hide" id="optionsPopup">
+        <label for="music">Music:</label>
+        <div class="music-options">
+          <label>
+            <input type="radio" name="music" value="on"> On
+          </label>
+          <label>
+            <input type="radio" name="music" value="off" checked> Off
+          </label>
+        </div>
+        <audio src="assets/bg-music.mp3" loop></audio>
+        <button id="optionsOk">OK</button>
+      </div>
     </div>
     <script src="script.js"></script>
   </body>
