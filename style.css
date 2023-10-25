@@ -24,6 +24,7 @@ body {
   width: 100%;
   display: grid;
   gap: 0.6em;
+  grid-template-columns: repeat(4, auto);
 }
 .game-container.paused {
   pointer-events: none;
@@ -51,6 +52,13 @@ body {
   width: 5.5em;
   height: 5.5em;
   cursor: pointer;
+  grid-column-start: auto;
+}
+.card-container:nth-child(13) {
+  grid-column-start: 2
+}
+.card-container:nth-child(14) {
+  grid-column-start: 3;
 }
 .card-before, .card-after {
   position: absolute;
