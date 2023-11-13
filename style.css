@@ -113,6 +113,7 @@ button {
   cursor: pointer;
 }
 #start, #restart, #options {
+  width: 12%;
   background-color: #9EBF8A;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
 }
